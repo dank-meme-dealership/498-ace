@@ -1,0 +1,10 @@
+# Links for ACE Report
+
+- [Chrome's PDF Viewer ACE Flaw](http://www.theregister.co.uk/2016/06/09/chromes_pdf_reader_has_arbitrary_code_execution_flaw/)
+- [iOS 9.1 ACE Flaw](https://support.apple.com/en-us/HT205370)
+- [TASVideos' explanation of ACE in video games](http://tasvideos.org/ArbitraryCodeExecutionHowTo.html)
+- [ACE in Pokemon](http://bulbapedia.bulbagarden.net/wiki/Arbitrary_code_execution)
+- [SMW ACE](https://www.youtube.com/watch?v=OPcV9uIY5i4)
+- [Ars Technica article on SMW ACE](http://arstechnica.com/gaming/2014/01/how-an-emulator-fueled-robot-reprogrammed-super-mario-world-on-the-fly/)
+
+
