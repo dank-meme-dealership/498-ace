@@ -5,6 +5,7 @@
 - [TASVideos' explanation of ACE in video games](http://tasvideos.org/ArbitraryCodeExecutionHowTo.html)
 - [ACE in Pokemon](http://bulbapedia.bulbagarden.net/wiki/Arbitrary_code_execution)
 - [SMW ACE](https://www.youtube.com/watch?v=OPcV9uIY5i4)
+- [SMW ACE Explained in Detail](https://www.youtube.com/watch?v=vAHXK2wut_I)
 - [Ars Technica article on SMW ACE](http://arstechnica.com/gaming/2014/01/how-an-emulator-fueled-robot-reprogrammed-super-mario-world-on-the-fly/)
 
 
