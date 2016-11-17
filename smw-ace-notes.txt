@@ -1,0 +1,25 @@
+load koopa shells into sprite slots
+  when a shell is breathed out by yoshi, it's position is updated one last time then not set anymore because the item is despawned
+sprites try to spawn in the highest available sprite slot
+  that means if we keep sprites spawned to a low count, the lower sprite slots are untouched and our code will remain there
+write some code via the low bytes of the x positions
+eat 10 berries so that yoshi creates a mushroom in the item slot up top
+  this will be used later
+spawn despawn mushroom so we get the p switch in an earlier sprite slot and can use it for code
+break block with spin jump
+  the low byte of the X position of these particles will serve as a jump address later, so they are despawned in a position that allows them to point to the array of sprites, which will allow us to execute code from there later
+glitch
+  spawn mushroom, then eat it but collect it before yoshi can eat it
+  by moving the screen right, the chuck will spawn
+    since the mushroom was on yoshi's tongue, and the chuck is spawning into the same sprite slot, the chuck is now on yoshi's tongue
+  yoshi eats the chuck
+  because eating a chuck is unexpected behavior, the game starts acting weird and jumps to a different address in memory
+    because the new address isn't in memory, the game goes into open bus
+  due to very carefully setup memory involving the p switch, the right-most dragon coin slot in the UI, and the Y position of the block particles we saw earlier from breaking the block, we are able to perform a jump and start executing code from the X positions of the sprites (the koopa shells we fired earlier)
+the code from the koopa shells does the following:
+  set the game mode to a cutscene that makes the game fade out and go to the credits
+    the game mode is set by storing a specific value derived from a koopa shell position into a place in memory that is derived from the direction mario is facing (right)
+  jump back into a sprite graphics routine that was designed to draw a boss on the screen
+    this location in memory works well because we jumped directly into the middle of a loop, so the messed up call stack will be fixed as the execution finds its way out of the loop
+    this is why the graphics get funky at this part
+  once out of this routine, game execution returns to normal and sees that the game mode has changed to the credits, so it warps there
