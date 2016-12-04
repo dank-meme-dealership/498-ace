@@ -16,7 +16,23 @@ The most common way to obtain access to the instruction pointer is through buffe
 
 The most famous example of this is the use of \texttt{strcpy} in the C Standard Library. The implementation of \texttt{strcpy} is to copy each character until it finds a \texttt{0} in the source string, which is used to denote the end of the string. This function easily allows users to overwrite the stack memory, as referenced in figure \ref{fig:strcpy}. \cite{buffer_overflow_attack_2004}
 
-Figure \ref{fig:shellcode} explains how to take advantage of a compromised instruction pointer. The character array called shellcode is filled with pre-written machine code that will open a shell on the compromised system. In the main method, by manipulating the value of ret initially to be pointing to the return address of main, and then manipulating that return address to be where the contents of shellcode are stored, a user can execute the contents of shellcode.
+Figure \ref{fig:shellcode} explains how to take advantage of a compromised instruction pointer. The character array called \texttt{shellcode} is filled with pre-written machine code that will open a shell on the compromised system. In the main method, by manipulating the value of ret initially to be pointing to the return address of main, and then manipulating that return address to be where the contents of \texttt{shellcode} are stored, a user can execute the contents of \texttt{shellcode}.
+
+The process by which the machine code for \texttt{shellcode} was generated can be used for any code a user would want to arbitrarily execute. The origins of \texttt{shellcode} is a simple C program:
+
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+
+void main() {
+   char *name[2];
+
+   name[0] = "/bin/sh";
+   name[1] = NULL;
+   execve(name[0], name, NULL);
+}
+\end{lstlisting}
+
+In order to determine the assembly code that is generated from the C program, a user could use \texttt{gdb}, a popular open-source debugger for C and assembly programs. After careful examination of the \texttt{gdb} output, it's possible to determine the assembly code that would be needed to perform a system call that executes the contents of the \texttt{shellcode} program. After the assembly instructions have been determined, generating the machine code is only a matter of compiling the assembly. Following that, a user could compile their code with \texttt{gcc} such that their program is placed in the global data segment, making it both readable and writable by the operating system. A user could then have code that is ready to be injected into a compromised process for arbitrary code execution.
 
 \newpage
 \vfill
