@@ -2,10 +2,9 @@
 
 The possibility of all arbitrary code execution is reliant on the ability to obtain access to the instruction pointer for any particular program. The instruction pointer is a processor register that points to where the current program is executing in memory. Therefore, wherever the instruction pointer is, is what’s being executed at the current time slot for that particular program. Access to the instruction pointer allows for any user to manipulate where the instruction pointer is pointing, in turn allowing for arbitrary code execution. 
 
-
 In Figure 2, the instruction pointer sits between L. Address and H. Address, the address space for the currently executing program. During the instruction fetch stage of the pipelined CPU process, the instruction pointer takes the instruction at that address, and loads it into the instruction register to be used for decoding and execution. The instruction pointer then increments by an amount that varies depending on what type of instruction was fetched. For example, if the instruction was add, the instruction pointer might only increment by one. However, if the instruction was a jump command, the instruction pointer might jump further down the address space, as is evident in Figure 2. Therefore, control over the instruction pointer is paramount for arbitrary code execution to occur. (2)
 
-\begin{figure}[h!]
+\begin{figure}
 \includegraphics[width=\linewidth]{ip.png}
 \caption{The process by which the instruction pointer moves.}
 \end{figure}

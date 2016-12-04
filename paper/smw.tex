@@ -10,7 +10,7 @@ The basis of this glitch is that the player is able to use an array in the gameâ
 
 Conveniently, at the very beginning of the first level, a large number of enemies appear on screen and fill up the entire sprite array (this was probably placed there by the game designers to showcase how many enemies the game can handle at once on the new hardware the game was released on). The player can very carefully despawn these enemies (by eating them and spitting them out with Yoshi) at very specific locations to write some machine code to be executed later.
 
-\begin{figure}[h!]
+\begin{figure}
 \includegraphics[width=\linewidth]{smw1.png}
 \caption{The large number of enemies at the beginning of the game. To the left is a visualization of the sprite array, showing the low-bytes of Y and X positions of each sprite. These values are what is turned into code to be executed later on.}
 \end{figure}
@@ -21,7 +21,7 @@ When Yoshi eats objects in Super Mario World, the game looks at a large array of
 
 After performing this jump instruction from eating the invalid memory, the game is able to work its way into the sprite array and start executing code from there. The code written by the original sprites sets the game-state to one that tells the game to start playing the final credits, then jumps to a place in code that the game is able to recover from. Normally, eating an invalid enemy would crash the game, so execution is jumped to a subroutine intended to draw a specific boss on the screen. This subroutine causes some interesting graphical glitches, but doesnâ€™t crash the game. Once the subroutine returns, the game realizes its state is the credits and launches the proper routine to to start playing them, thus beating Super Mario World.
 
-\begin{figure}[h!]
+\begin{figure}
 \includegraphics[width=\linewidth]{smw2.png}
 \caption{The graphical glitches that occur when jumping to the boss-drawing subroutine. On the left, the same sprite array visualization shows the now complete machine code written via the X-positions of the first 7 sprite slots.}
 \end{figure}
