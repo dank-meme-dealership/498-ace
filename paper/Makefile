@@ -1,11 +1,28 @@
 TEX = paper.tex
 
-PDF = paper.pdf
+CLS = acmsmall.cls
+
+STY = acmcopyright.sty
+
+PACKAGE = ogden-royster
+
+PDF = ${TEX:%.tex=%.pdf}
+
+PWD= ${shell pwd}
 
 all: $(PDF)
 
-%.pdf: $(TEX)
+%.pdf: %.tex $(CLS) $(STY) .FORCE
 	pdflatex $*
+	bibtex $*
+	pdflatex $*
+	while ( grep -q '^LaTeX Warning: Label(s) may have changed' $*.log)\
+	do pdflatex $*; done
 
 clean:
-	$(RM) *.aux *.log $(PDF)
+	$(RM) $(PDF) *.aux *.log  *.blg *.bbl
+
+zip: all clean
+	zip $(PACKAGE).zip * -x '*~' -x '*.tgz' -x '*.zip' -x CVS -x 'CVS/*'
+
+.FORCE:
