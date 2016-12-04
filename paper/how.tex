@@ -34,9 +34,6 @@ void main() {
 
 In order to determine the assembly code that is generated from the C program, a user could use \texttt{gdb}, a popular open-source debugger for C and assembly programs. After careful examination of the \texttt{gdb} output, it's possible to determine the assembly code that would be needed to perform a system call that executes the contents of the \texttt{shellcode} program. After the assembly instructions have been determined, generating the machine code is only a matter of compiling the assembly. Following that, a user could compile their code with \texttt{gcc} such that their program is placed in the global data segment, making it both readable and writable by the operating system. A user could then have code that is ready to be injected into a compromised process for arbitrary code execution.
 
-\newpage
-\vfill
-
 \begin{figure}
 \begin{lstlisting}
 #include <string.h>
@@ -97,6 +94,3 @@ void main() {
 \caption{The contents of \texttt{shellcode} are executed when the return address of the main method is manipulated.}
 \label{fig:shellcode}
 \end{figure}
-
-\vfill
-\clearpage
