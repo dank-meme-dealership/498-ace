@@ -6,11 +6,11 @@ Because arbitrary code execution has been a software engineering issue for so lo
 
 \subsection{Foxypress WordPress Plugin}
 
-Today, the web is perhaps the most common place for arbitrary code execution to occur. In 2012, the Foxypress WordPress plugin was found to have an exploit that could allow arbitrary code execution. One of the plugin’s source code files, \texttt{uploadify}, was responsible for allowing users to upload remote files to their WordPress servers. When the exploit was found, it allowed for remote files to execute malicious PHP code on the user’s WordPress server. Potential outcomes of this bug include website vandalism, database corruption, and stealing of credit card (or any other) information. It was found that versions 0.4.1.1 - 0.4.2.1 were vulnerable \cite{foxypress_2012}. The source code containing the exploit can be seen in Figure 1.
+Today, the web is perhaps the most common place for arbitrary code execution to occur. In 2012, the Foxypress WordPress plugin was found to have an exploit that could allow arbitrary code execution. One of the plugin's source code files, \texttt{uploadify}, was responsible for allowing users to upload remote files to their WordPress servers. When the exploit was found, it allowed for remote files to execute malicious PHP code on the user's WordPress server. Potential outcomes of this bug include website vandalism, database corruption, and stealing of credit card (or any other) information. It was found that versions 0.4.1.1 - 0.4.2.1 were vulnerable \cite{foxypress_2012}. The source code containing the exploit can be seen in Figure 1.
 
 \subsection{Chrome PDF Viewer}
 
-Furthermore, In June 2016, it was found that Google Chrome’s PDF viewer had the potential for arbitrary code execution. In CVE-2016-1681, found by Aleksandar Nikolic, it was discovered that if a PDF has an embedded \texttt{jpeg2000} image could trigger a heap buffer overflow. The simple fix, according to Nikolic, was to change an \texttt{assert} statement to an \texttt{if} statement in the call to a  OpenJPEG library function that Google used in their PDF viewer. \cite{chrome_pdf_2016}
+Furthermore, In June 2016, it was found that Google Chrome's PDF viewer had the potential for arbitrary code execution. In CVE-2016-1681, found by Aleksandar Nikolic, it was discovered that if a PDF has an embedded \texttt{jpeg2000} image could trigger a heap buffer overflow. The simple fix, according to Nikolic, was to change an \texttt{assert} statement to an \texttt{if} statement in the call to a  OpenJPEG library function that Google used in their PDF viewer. \cite{chrome_pdf_2016}
 
 \subsection{iOS 9.1}
 

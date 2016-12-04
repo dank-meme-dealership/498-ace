@@ -1,10 +1,10 @@
 \section{How Arbitrary Code Execution Works}
 
-The possibility of all arbitrary code execution is reliant on the ability to obtain access to the instruction pointer for any particular program. The instruction pointer is a processor register that points to where the current program is executing in memory. Therefore, wherever the instruction pointer is, is what’s being executed at the current time slot for that particular program. Access to the instruction pointer allows for any user to manipulate where the instruction pointer is pointing, in turn allowing for arbitrary code execution. 
+The possibility of all arbitrary code execution is reliant on the ability to obtain access to the instruction pointer for any particular program. The instruction pointer is a processor register that points to where the current program is executing in memory. Therefore, wherever the instruction pointer is, is what's being executed at the current time slot for that particular program. Access to the instruction pointer allows for any user to manipulate where the instruction pointer is pointing, in turn allowing for arbitrary code execution. 
 
 \subsection{Instruction Pointer}
 
-In \ref{fig:ip}, the instruction pointer sits between \textbf{L. Address} and \textbf{H. Address}, the address space for the currently executing program. During the instruction fetch stage of the pipelined CPU process, the instruction pointer takes the instruction at that address, and loads it into the instruction register to be used for decoding and execution. The instruction pointer then increments by an amount that varies depending on what type of instruction was fetched. For example, if the instruction was add, the instruction pointer might only increment by one. However, if the instruction was a jump command, the instruction pointer might jump further down the address space, as is evident in figure \ref{fig:ip}. Therefore, control over the instruction pointer is paramount for arbitrary code execution to occur. \cite{instruction_pointer_1999}
+In figure \ref{fig:ip}, the instruction pointer sits between \textbf{L. Address} and \textbf{H. Address}, the address space for the currently executing program. During the instruction fetch stage of the pipelined CPU process, the instruction pointer takes the instruction at that address, and loads it into the instruction register to be used for decoding and execution. The instruction pointer then increments by an amount that varies depending on what type of instruction was fetched. For example, if the instruction was add, the instruction pointer might only increment by one. However, if the instruction was a jump command, the instruction pointer might jump further down the address space, as is evident in figure \ref{fig:ip}. Therefore, control over the instruction pointer is paramount for arbitrary code execution to occur. \cite{instruction_pointer_1999}
 
 \begin{figure}
 \includegraphics[width=\linewidth]{ip.png}
@@ -65,18 +65,17 @@ The most famous example of this is the use of \texttt{strcpy} in the C Standard 
 \begin{figure}
 \begin{lstlisting}
 char shellcode[] =
-  "\xeb\x2a\x5e\x89\x76\x08\xc6\x46\x07\x00\xc7\x46\x0c\x00\x00\x00"
-  "\x00\xb8\x0b\x00\x00\x00\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80"
-  "\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xd1\xff\xff"
-  "\xff\x2f\x62\x69\x6e\x2f\x73\x68\x00\x89\xec\x5d\xc3";
+    "\xeb\x2a\x5e\x89\x76\x08\xc6\x46\x07\x00\xc7\x46\x0c\x00\x00\x00"
+    "\x00\xb8\x0b\x00\x00\x00\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80"
+    "\xb8\x01\x00\x00\x00\xbb\x00\x00\x00\x00\xcd\x80\xe8\xd1\xff\xff"
+    "\xff\x2f\x62\x69\x6e\x2f\x73\x68\x00\x89\xec\x5d\xc3";
 
 
 void main() {
-  int *ret;
+    int *ret;
 
-
-  ret = (int *)&ret + 2;
-  (*ret) = (int)shellcode;
+    ret = (int *)&ret + 2;
+    (*ret) = (int)shellcode;
 }
 \end{lstlisting}
 \caption{The contents of \texttt{shellcode} are executed when the return address of the main method is manipulated.}
@@ -87,16 +86,16 @@ Figure \ref{fig:shellcode} explains how to take advantage of a compromised instr
 
 The process by which the machine code for \texttt{shellcode} was generated can be used for any code a user would want to arbitrarily execute. The origins of \texttt{shellcode} is a simple C program:
 
-\begin{lstlisting}[language=C]
-#include <stdio.h>
+      \begin{lstlisting}[language=C]
+      #include <stdio.h>
 
-void main() {
-   char *name[2];
+      void main() {
+         char *name[2];
 
-   name[0] = "/bin/sh";
-   name[1] = NULL;
-   execve(name[0], name, NULL);
-}
-\end{lstlisting}
+         name[0] = "/bin/sh";
+         name[1] = NULL;
+         execve(name[0], name, NULL);
+      }
+      \end{lstlisting}
 
 In order to determine the assembly code that is generated from the C program, a user could use \texttt{gdb}, a popular open-source debugger for C and assembly programs. After careful examination of the \texttt{gdb} output, it's possible to determine the assembly code that would be needed to perform a system call that executes the contents of the \texttt{shellcode} program. After the assembly instructions have been determined, generating the machine code is only a matter of compiling the assembly. Following that, a user could compile their code with \texttt{gcc} such that their program is placed in the global data segment, making it both readable and writable by the operating system. A user could then have code that is ready to be injected into a compromised process for arbitrary code execution. \cite{smash}
