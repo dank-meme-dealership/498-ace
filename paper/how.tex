@@ -5,7 +5,10 @@ The possibility of all arbitrary code execution is reliant on the ability to obt
 
 In Figure 2, the instruction pointer sits between L. Address and H. Address, the address space for the currently executing program. During the instruction fetch stage of the pipelined CPU process, the instruction pointer takes the instruction at that address, and loads it into the instruction register to be used for decoding and execution. The instruction pointer then increments by an amount that varies depending on what type of instruction was fetched. For example, if the instruction was add, the instruction pointer might only increment by one. However, if the instruction was a jump command, the instruction pointer might jump further down the address space, as is evident in Figure 2. Therefore, control over the instruction pointer is paramount for arbitrary code execution to occur. (2)
 
-% TODO: put image here
+\begin{figure}
+\includegraphics[width=\linewidth]{ip.png}
+\caption{The process by which the instruction pointer moves.}
+\end{figure}
 
 \subsection{Buffer Overflow}
 
@@ -14,7 +17,7 @@ The most common way to obtain access to the instruction pointer is through buffe
 
 The most famous example of this is the use of strcpy in the C Standard Library. The implementation of strcpy is to copy each character until it finds a “0” in the source string, which is used to denote the end of the string. This function easily allows users to overwrite the stack memory, as referenced in Figure 3. (3)
 
-\begin{lstlisting}[language=C]
+\begin{verbatim}
 #include <string.h>
 #include <stdio.h> 
 
@@ -48,11 +51,11 @@ int main(int argc, char* argv[])
 foo(argv[1]);
     return 0;
 }
-\end{lstlisting}
+\end{verbatim}
 
 The next figure explains how to take advantage of a compromised instruction pointer. The character array called shellcode is filled with pre-written machine code that will open a shell on the compromised system. In the main method, by manipulating the value of ret initially to be pointing to the return address of main, and then manipulating that return address to be where the contents of shellcode are stored, a user can execute the contents of shellcode.
 
-\begin{lstlisting}[language=C]
+\begin{verbatim}
 char shellcode[] =
   "\xeb\x2a\x5e\x89\x76\x08\xc6\x46\x07\x00\xc7\x46\x0c\x00\x00\x00"
   "\x00\xb8\x0b\x00\x00\x00\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80"
@@ -67,4 +70,4 @@ void main() {
   ret = (int *)&ret + 2;
   (*ret) = (int)shellcode;
 }
-\end{lstlisting}
+\end{verbatim}
