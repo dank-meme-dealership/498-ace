@@ -1,0 +1,7 @@
+\section{Conclusion}
+
+As discussed, arbitrary code execution is a type of injection attack that results from the presence of exploitable bugs in software. Through control of the instruction pointer, a user can redirect where the program is reading and executing memory, allowing for binaries to be ran that never existed in the original program. This is often accomplished by buffer overflow in low-level programming languages, or using unsafe libraries in today's software projects. 
+
+However, not every application of arbitrary code execution is malicious. We've discussed how through precise inputs and taking advantage of the limited space available to store assets in Super Mario World, users are able to write assembly code and inject it into the running gaming, resulting in a jump in memory to the end of the game. 
+
+Programs should be designed such that arbitrary code execution is difficult, if not impossible. Through use of a no-execute bit on modern architecture or a stack canary that can detect if buffer overflow has occurred, along with responsible and security-conscious design, software developers can strive to create software products not free of bugs, but free of the possibility of arbitrary code execution.
